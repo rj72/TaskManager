@@ -9,6 +9,7 @@ class BaseController extends GetxController {
   var selectedCategory = 'All Categories'.obs;
   var completedCount = 0.obs;
   var totalTasks = 0.obs;
+  var isExpanded = false.obs;
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
   final List<String> categories = [
@@ -20,6 +21,7 @@ class BaseController extends GetxController {
     'Other',
   ];
 
+  @override
   onInit() {
     super.onInit();
     loadTasks();

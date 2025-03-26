@@ -19,9 +19,18 @@ class MainView extends BaseStatelessView<BaseController> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: _showAddTaskDialog,
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.add,color: Colors.white,),
+                onPressed: _showAddTaskDialog,
+              ),
+            ),
           ),
         ],
       ),
@@ -35,10 +44,12 @@ class MainView extends BaseStatelessView<BaseController> {
                 style: TextStyle(fontSize: 16, color: Colors.grey)),
             _buildProgressSection(),
             const SizedBox(height: 16),
+            _buildSearchTask(),
+            const SizedBox(height: 8),
             _buildStatusFilter(),
             const SizedBox(height: 8),
             _buildCategoryFilter(),
-            const SizedBox(height: 16),
+            const Divider(),
             Expanded(child: _buildTaskList()),
           ],
         ),
@@ -78,13 +89,8 @@ class MainView extends BaseStatelessView<BaseController> {
   }
 
   Widget _buildStatusFilter() {
-    return Container(
+    return SizedBox(
       height: 50,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: Colors.grey, width: 0.5),
-      ),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: 3,
@@ -201,7 +207,7 @@ class MainView extends BaseStatelessView<BaseController> {
       }
       return ListView.separated(
         itemCount: tasks.length,
-        separatorBuilder: (_, __) => const Divider(),
+        separatorBuilder: (_, __) => const SizedBox(height: 8),
         itemBuilder: (context, index) {
           final task = tasks[index];
           return Slidable(
@@ -238,69 +244,76 @@ class MainView extends BaseStatelessView<BaseController> {
                 ),
               ],
             ),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.grey, width: 0.5),
-              ),
-              child: InkWell(
-                onTap: () {
-                  task.isCompleted.toggle();
-                  controller.updateTaskCounts();
-                },
-                borderRadius: BorderRadius.circular(8),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Row(
-                    children: [
-                      task.isCompleted.value
-                          ? const Icon(Icons.check_circle, color: Colors.blue)
-                          : const Icon(Icons.circle_outlined),
-                      const SizedBox(width: 12),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    task.title,
-                                    style: task.isCompleted.value
-                                        ? const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                            decorationThickness: 2,
-                                          )
-                                        : const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                          ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(width: 12),
-                              _buildPriorityChip(
-                                  task.priority, task.isCompleted.value),
-                              const SizedBox(width: 12),
-                              _buildPriorityChip(
-                                  task.category, task.isCompleted.value),
-                            ],
-                          ),
-                          if (task.description.isNotEmpty)
-                            Text(
-                              task.description,
-                              style: const TextStyle(
-                                  fontSize: 12, color: Colors.grey),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(8),
+              onTap: () {
+                task.isCompleted.toggle();
+                controller.updateTaskCounts();
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.grey, width: 0.5),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    task.isCompleted.toggle();
+                    controller.updateTaskCounts();
+                  },
+                  borderRadius: BorderRadius.circular(8),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: Row(
+                      children: [
+                        task.isCompleted.value
+                            ? const Icon(Icons.check_circle, color: Colors.blue)
+                            : const Icon(Icons.circle_outlined),
+                        const SizedBox(width: 12),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      task.title,
+                                      style: task.isCompleted.value
+                                          ? const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                              decoration:
+                                                  TextDecoration.lineThrough,
+                                              decorationThickness: 2,
+                                            )
+                                          : const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                            ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(width: 12),
+                                _buildPriorityChip(
+                                    task.priority, task.isCompleted.value),
+                                const SizedBox(width: 12),
+                                _buildPriorityChip(
+                                    task.category, task.isCompleted.value),
+                              ],
                             ),
-                        ],
-                      ),
-                    ],
+                            if (task.description.isNotEmpty)
+                              Text(
+                                task.description,
+                                style: const TextStyle(
+                                    fontSize: 12, color: Colors.grey),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -377,5 +390,47 @@ class MainView extends BaseStatelessView<BaseController> {
       //controller.updateTaskCounts();
       controller.addTask(newTask);
     }
+  }
+
+  Widget _buildSearchTask() {
+    return Obx(
+      () => AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        width: controller.isExpanded.value ? 250 : 50,
+        height: 50,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.black54),
+        ),
+        child: Row(
+          children: [
+            if (!controller.isExpanded.value)
+              IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: () {
+                  controller.isExpanded.value = true;
+                },
+              ),
+            if (controller.isExpanded.value)
+              const Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: "Search...",
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  ),
+                ),
+              ),
+            if (controller.isExpanded.value)
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  controller.isExpanded.value = false;
+                },
+              ),
+          ],
+        ),
+      ),
+    );
   }
 }
