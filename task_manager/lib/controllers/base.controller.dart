@@ -11,6 +11,7 @@ class BaseController extends GetxController {
   var totalTasks = 0.obs;
   var isExpanded = false.obs;
   final DatabaseHelper _dbHelper = DatabaseHelper();
+  var searchValue = ''.obs;
 
   final List<String> categories = [
     'All categories',
@@ -106,5 +107,21 @@ class BaseController extends GetxController {
   void updateTaskCounts() {
     completedCount.value = tasks.where((t) => t.isCompleted.value).length;
     totalTasks.value = tasks.length;
+  }
+
+  void resultSearch() {
+    if (searchValue.value.isEmpty) {
+      loadTasks(); // Recharge toutes les tâches si la recherche est vide
+    } else {
+      tasks.value = tasks
+          .where((task) =>
+              task.title
+                  .toLowerCase()
+                  .contains(searchValue.value.toLowerCase()) ||
+              task.description
+                  .toLowerCase()
+                  .contains(searchValue.value.toLowerCase()))
+          .toList();
+    }
   }
 }
