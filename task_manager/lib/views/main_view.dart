@@ -42,21 +42,25 @@ class MainView extends BaseStatelessView<BaseController> {
         extendBody: true,
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Organize your tasks with ease and elegance',
-                  style: TextStyle(fontSize: 16, color: Colors.grey)),
-              _buildProgressSection(),
-              const SizedBox(height: 16),
-              _buildSearchTask(),
-              const SizedBox(height: 8),
-              _buildStatusFilter(),
-              const SizedBox(height: 8),
-              _buildCategoryFilter(),
-              const Divider(),
-              Expanded(child: _buildTaskList()),
-            ],
+          child: SingleChildScrollView(
+            child: Flex(
+              direction: Axis.vertical,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('Organize your tasks with ease and elegance',
+                    style: TextStyle(fontSize: 16, color: Colors.grey)),
+                _buildProgressSection(),
+                const SizedBox(height: 16),
+                _buildSearchTask(),
+                const SizedBox(height: 8),
+                _buildStatusFilter(),
+                const SizedBox(height: 8),
+                _buildCategoryFilter(),
+                const Divider(),
+                Flexible(fit:FlexFit.loose, child: _buildTaskList()),
+              ],
+            ),
           ),
         ),
       ),
@@ -206,6 +210,8 @@ class MainView extends BaseStatelessView<BaseController> {
     }
     return ListView.separated(
       itemCount: tasks.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       separatorBuilder: (_, __) => const SizedBox(height: 8),
       itemBuilder: (context, index) {
         final task = tasks[index];
