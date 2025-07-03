@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 import '../controllers/base.controller.dart';
@@ -130,12 +128,13 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
               Navigator.pop(
                 context,
                 Task(
+                    id: task?.id,
                     title: title,
                     description: description,
                     category: category,
                     priority: priority,
                     dueDate: dueDate.value,
-                    isCompleted: false.obs),
+                    isCompleted: task?.isCompleted ?? false.obs),
               );
             }
           },

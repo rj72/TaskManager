@@ -240,7 +240,7 @@ class MainView extends BaseStatelessView<BaseController> {
               ),
               SlidableAction(
                 onPressed: (_) async {
-                  controller.deleteTask(task.id!);
+                  controller.deleteTask(task.id);
                 },
                 icon: Icons.delete,
                 foregroundColor: Colors.red,

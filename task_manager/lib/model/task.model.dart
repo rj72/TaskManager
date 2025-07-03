@@ -1,23 +1,25 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class Task {
-  int? id;
+  static int _idCounter = 0;
+
+  final int id;
   final String title;
   final String description;
   final String category;
   final String priority;
   final DateTime? dueDate;
-  var isCompleted = false.obs;
+  final RxBool isCompleted;
 
   Task({
-    this.id,
+    int? id,
     required this.title,
     this.description = '',
     required this.category,
     this.priority = 'Medium',
     this.dueDate,
     required this.isCompleted,
-  });
+  })  : id = id ?? ++_idCounter;
 
   Map<String, dynamic> toMap() {
     return {
