@@ -51,13 +51,28 @@ class DatabaseHelper {
 
   Future<int> insertTask(Task task) async {
     Database db = await database;
-    return await db.insert('tasks', task.toMap());
+    return await db.insert('tasks', {'title': task.title,
+      'description': task.description,
+      'category': task.category,
+      'priority': task.priority,
+      'dueDate': task.dueDate?.toIso8601String(),
+      'isCompleted': task.isCompleted.value ? 1 : 0});
   }
 
   Future<int> updateTask(Task task) async {
     Database db = await database;
-    return await db
-        .update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id]);
+    return await db.update(
+        'tasks',
+        {
+          'title': task.title,
+          'description': task.description,
+          'category': task.category,
+          'priority': task.priority,
+          'dueDate': task.dueDate?.toIso8601String(),
+          'isCompleted': task.isCompleted.value ? 1 : 0,
+        },
+        where: 'id = ?',
+        whereArgs: [task.id]);
   }
 
   Future<int> deleteTask(int id) async {

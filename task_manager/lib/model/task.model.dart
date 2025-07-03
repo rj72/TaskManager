@@ -3,7 +3,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 class Task {
   static int _idCounter = 0;
 
-  final int id;
+  final int? id;
   final String title;
   final String description;
   final String category;
@@ -12,14 +12,14 @@ class Task {
   final RxBool isCompleted;
 
   Task({
-    int? id,
+    this.id,
     required this.title,
     this.description = '',
     required this.category,
     this.priority = 'Medium',
     this.dueDate,
     required this.isCompleted,
-  })  : id = id ?? ++_idCounter;
+  });
 
   Map<String, dynamic> toMap() {
     return {

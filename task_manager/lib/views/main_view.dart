@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 
 import '../controllers/base.controller.dart';
 import '../model/task.model.dart';
+import '../utils.dart';
 import 'add_task.dialog.dart';
 import 'base_stateless.view.dart';
 
 class MainView extends BaseStatelessView<BaseController> {
   final TextEditingController searchController = TextEditingController();
+
   MainView({Key? key}) : super(key: key, controller: Get.put(BaseController()));
 
   @override
@@ -58,7 +60,7 @@ class MainView extends BaseStatelessView<BaseController> {
                 const SizedBox(height: 8),
                 _buildCategoryFilter(),
                 const Divider(),
-                Flexible(fit:FlexFit.loose, child: _buildTaskList()),
+                Flexible(fit: FlexFit.loose, child: _buildTaskList()),
               ],
             ),
           ),
@@ -149,7 +151,7 @@ class MainView extends BaseStatelessView<BaseController> {
                   label: Text(category),
                   selectedColor: Colors.blue,
                   labelStyle: TextStyle(
-                    color: controller.selectedStatus.value == category
+                    color: controller.selectedCategory.value == category
                         ? Colors.white
                         : Colors.black,
                   ),
@@ -240,7 +242,7 @@ class MainView extends BaseStatelessView<BaseController> {
               ),
               SlidableAction(
                 onPressed: (_) async {
-                  controller.deleteTask(task.id);
+                  controller.deleteTask(task.id!);
                 },
                 icon: Icons.delete,
                 foregroundColor: Colors.red,
@@ -309,6 +311,15 @@ class MainView extends BaseStatelessView<BaseController> {
                               const SizedBox(width: 12),
                               _buildPriorityChip(
                                   task.category, task.isCompleted.value),
+                              const SizedBox(width: 12),
+                              task.dueDate != null
+                                  ? Text(
+                                      task.dueDate!.toFormattedString(),
+                                      style: const TextStyle(
+                                          fontSize: 12, color: Colors.grey),
+                                      overflow: TextOverflow.ellipsis,
+                                    )
+                                  : const SizedBox.shrink(),
                             ],
                           ),
                           if (task.description.isNotEmpty)
