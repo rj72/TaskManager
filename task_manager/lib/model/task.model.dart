@@ -1,7 +1,6 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class Task {
-  static int _idCounter = 0;
 
   final int? id;
   final String title;
