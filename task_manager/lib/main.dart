@@ -15,9 +15,9 @@ class TaskManagerApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Task Manager',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
-        fontFamily: 'Sebino'
+        fontFamily: 'Sebino',
       ),
       home: MainView(),
       debugShowCheckedModeBanner: false,

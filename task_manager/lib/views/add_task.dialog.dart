@@ -119,9 +119,13 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Cancel',style: TextStyle(color: Colors.blue,)),
         ),
         ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all(Theme.of(context).primaryColor),
+          ),
           onPressed: () {
             if (formKey.currentState?.validate() ?? false) {
               formKey.currentState?.save();
@@ -138,7 +142,10 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
               );
             }
           },
-          child: Text(task == null ? 'Create Task' : 'Edit Task'),
+          child: Text(
+            task == null ? 'Create Task' : 'Edit Task',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ],
     );

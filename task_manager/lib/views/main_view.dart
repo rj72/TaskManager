@@ -242,7 +242,34 @@ class MainView extends BaseStatelessView<BaseController> {
               ),
               SlidableAction(
                 onPressed: (_) async {
-                  controller.deleteTask(task.id!);
+                  Get.defaultDialog(
+                    title: 'Delete Task',
+                    middleText: 'Are you sure to delete this task?',
+                    confirm: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            Theme.of(context).primaryColor),
+                      ),
+                      onPressed: () {
+                        controller.deleteTask(task.id!);
+                        Get.back();
+                      },
+                      child: const Text(
+                        'OK',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    cancel: TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: const Text('Cancel',
+                          style: TextStyle(
+                            color: Colors.blue,
+                          )),
+                    ),
+                  );
+                  //controller.deleteTask(task.id!);
                 },
                 icon: Icons.delete,
                 foregroundColor: Colors.red,
