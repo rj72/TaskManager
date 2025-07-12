@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:task_manager/views/widgets/language_switcher.dart';
 
 import '../controllers/base.controller.dart';
 import '../model/task.model.dart';
@@ -15,12 +17,13 @@ class MainView extends BaseStatelessView<BaseController> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Task Manager',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+          title: Text(
+            l10n.appTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
           ),
           actions: [
             Padding(
@@ -39,6 +42,7 @@ class MainView extends BaseStatelessView<BaseController> {
                 ),
               ),
             ),
+            LanguageSwitcher()
           ],
         ),
         extendBody: true,
@@ -50,8 +54,8 @@ class MainView extends BaseStatelessView<BaseController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('Organize your tasks with ease and elegance',
-                    style: TextStyle(fontSize: 16, color: Colors.grey)),
+                Text(l10n.description,
+                    style: const TextStyle(fontSize: 16, color: Colors.grey)),
                 _buildProgressSection(),
                 const SizedBox(height: 16),
                 _buildSearchTask(),
@@ -70,15 +74,16 @@ class MainView extends BaseStatelessView<BaseController> {
   }
 
   Widget _buildProgressSection() {
+    final l10n = AppLocalizations.of(Get.context!)!;
     int completed = controller.completedCount.value;
     int total = controller.totalTasks.value;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Progress',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        Text(
+          l10n.progress,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         ClipRRect(
@@ -91,7 +96,7 @@ class MainView extends BaseStatelessView<BaseController> {
             )),
         const SizedBox(height: 8),
         Text(
-          '$completed/$total completed',
+          '$completed/$total ${AppLocalizations.of(Get.context!)!.completed}',
           style: const TextStyle(color: Colors.grey),
         ),
       ],
@@ -99,6 +104,7 @@ class MainView extends BaseStatelessView<BaseController> {
   }
 
   Widget _buildStatusFilter() {
+    final l10n = AppLocalizations.of(Get.context!)!;
     return SizedBox(
       height: 50,
       child: ListView.separated(
@@ -106,7 +112,7 @@ class MainView extends BaseStatelessView<BaseController> {
         itemCount: 3,
         separatorBuilder: (_, __) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
-          final status = ['All', 'Active', 'Completed'][index];
+          final status = [(l10n.all), (l10n.active), (l10n.completed)][index];
           return ChoiceChip(
             label: Text(status),
             selectedColor: Colors.black12,
@@ -127,13 +133,14 @@ class MainView extends BaseStatelessView<BaseController> {
   }
 
   Widget _buildCategoryFilter() {
-    const mainCategories = [
-      'All Categories',
-      'Personal',
-      'Work',
-      'Home',
-      'Health',
-      'Other'
+    final l10n = AppLocalizations.of(Get.context!)!;
+    var mainCategories = [
+      l10n.allCategories,
+      l10n.personal,
+      l10n.work,
+      l10n.home,
+      l10n.health,
+      l10n.other
     ];
 
     return SizedBox(
@@ -174,33 +181,10 @@ class MainView extends BaseStatelessView<BaseController> {
     );
   }
 
-  Widget _buildNewTaskButton() {
-    return GestureDetector(
-      onTap: _showAddTaskDialog,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: Colors.blue.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: const Row(
-          children: [
-            Icon(Icons.add, size: 16, color: Colors.blue),
-            SizedBox(width: 4),
-            Text(
-              'New Task',
-              style: TextStyle(color: Colors.blue),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildClearCompletedButton() {
     return TextButton(
       onPressed: controller.clearCompletedTasks,
-      child: const Text('Clear Completed'),
+      child: Text(AppLocalizations.of(Get.context!)!.clearCompleted),
     );
   }
 
@@ -238,13 +222,14 @@ class MainView extends BaseStatelessView<BaseController> {
                 icon: Icons.edit,
                 foregroundColor: Colors.blue,
                 backgroundColor: Colors.blue.withOpacity(0.1),
-                label: 'Edit',
+                label: AppLocalizations.of(Get.context!)!.edit,
               ),
               SlidableAction(
                 onPressed: (_) async {
                   Get.defaultDialog(
-                    title: 'Delete Task',
-                    middleText: 'Are you sure to delete this task?',
+                    title: AppLocalizations.of(Get.context!)!.deleteTask,
+                    middleText:
+                        AppLocalizations.of(Get.context!)!.confirmDelete,
                     confirm: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
@@ -263,8 +248,8 @@ class MainView extends BaseStatelessView<BaseController> {
                       onPressed: () {
                         Get.back();
                       },
-                      child: const Text('Cancel',
-                          style: TextStyle(
+                      child: Text(AppLocalizations.of(Get.context!)!.cancel,
+                          style: const TextStyle(
                             color: Colors.blue,
                           )),
                     ),
@@ -274,7 +259,7 @@ class MainView extends BaseStatelessView<BaseController> {
                 icon: Icons.delete,
                 foregroundColor: Colors.red,
                 backgroundColor: Colors.red.withOpacity(0.1),
-                label: 'Delete',
+                label: AppLocalizations.of(Get.context!)!.delete,
               ),
             ],
           ),
@@ -336,8 +321,7 @@ class MainView extends BaseStatelessView<BaseController> {
                               _buildPriorityChip(
                                   task.priority, task.isCompleted.value),
                               const SizedBox(width: 12),
-                              _buildPriorityChip(
-                                  task.category, task.isCompleted.value),
+                              _buildCategoryChip(task.category),
                               const SizedBox(width: 12),
                               task.dueDate != null
                                   ? Text(
@@ -373,19 +357,19 @@ class MainView extends BaseStatelessView<BaseController> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'No tasks found',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(Get.context!)!.noTaskFound,
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Colors.grey,
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Try changing filters or create a new task',
+          Text(
+            AppLocalizations.of(Get.context!)!.changeFilter,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               color: Colors.grey,
             ),
@@ -394,7 +378,7 @@ class MainView extends BaseStatelessView<BaseController> {
           ElevatedButton.icon(
             onPressed: _showAddTaskDialog,
             icon: const Icon(Icons.add),
-            label: const Text('Create New Task'),
+            label: Text(AppLocalizations.of(Get.context!)!.createTask),
           ),
         ],
       ),
@@ -403,23 +387,84 @@ class MainView extends BaseStatelessView<BaseController> {
 
   Widget _buildPriorityChip(String priority, bool isCompleted) {
     Color color;
-    switch (priority.toLowerCase()) {
-      case 'high':
-        color = Colors.red;
-        break;
-      case 'medium':
-        color = Colors.orange;
-        break;
-      default:
-        color = Colors.green;
+    final l10n = AppLocalizations.of(Get.context!);
+
+    String getPriorityLabel(String key) {
+      switch (key) {
+        case 'High':
+          return l10n!.high;
+        case 'Medium':
+          return l10n!.medium;
+        case 'Low':
+          return l10n!.low;
+        default:
+          return l10n!.low; // Default to low if not recognized
+      }
+    }
+
+    Color getPriorityColor(String key) {
+      switch (key) {
+        case 'High':
+          return Colors.red;
+        case 'Medium':
+          return Colors.orange;
+        default :
+          return Colors.green;
+      }
     }
 
     return Chip(
-      label: Text(priority),
+      label: Text(getPriorityLabel(priority)),
       padding: EdgeInsets.zero,
-      backgroundColor: color.withOpacity(0.2),
+      backgroundColor: getPriorityColor(priority).withOpacity(0.2),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      labelStyle: TextStyle(color: color),
+      labelStyle: TextStyle(color: getPriorityColor(priority)),
+    );
+  }
+
+  Widget _buildCategoryChip(String category) {
+    final l10n = AppLocalizations.of(Get.context!);
+
+    // Traduction de la clé en texte localisé
+    String getCategoryLabel(String key) {
+      switch (key) {
+        case 'Personal':
+          return l10n!.personal;
+        case 'Work':
+          return l10n!.work;
+        case 'Home':
+          return l10n!.home;
+        case 'Health':
+          return l10n!.health;
+        default:
+          return l10n!.other;
+      }
+    }
+
+    // Couleur selon la clé
+    Color getCategoryColor(String key) {
+      switch (key) {
+        case 'Personal':
+          return Colors.purple;
+        case 'Work':
+          return Colors.blue;
+        case 'Home':
+          return Colors.green;
+        case 'Health':
+          return Colors.red;
+        case 'Other':
+          return Colors.orange;
+        default:
+          return Colors.grey;
+      }
+    }
+
+    return Chip(
+      label: Text(getCategoryLabel(category)),
+      padding: EdgeInsets.zero,
+      backgroundColor: getCategoryColor(category).withOpacity(0.2),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      labelStyle: TextStyle(color: getCategoryColor(category)),
     );
   }
 
@@ -462,10 +507,10 @@ class MainView extends BaseStatelessView<BaseController> {
                   controller.searchValue.value = value;
                   controller.resultSearch();
                 },
-                decoration: const InputDecoration(
-                  hintText: "Search...",
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(Get.context!)!.search,
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                 ),
               ),
             ),

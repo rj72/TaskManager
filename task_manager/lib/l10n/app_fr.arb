@@ -1,0 +1,74 @@
+{
+  "language": "Français",
+
+  "appTitle": "Gestionnaire de Tâches",
+
+  "description": "Organisez vos tâches avec facilité et élégance",
+
+  "progress": "Progression",
+
+  "completed": "Terminées",
+
+  "all": "Toutes",
+
+  "active": "Actives",
+
+  "allCategories": "Toutes les catégories",
+
+  "personal": "Personnel",
+
+  "work": "Travail",
+
+  "home": "Maison",
+
+  "health": "Santé",
+
+  "other": "Autre",
+
+  "clearCompleted": "Effacer les terminées",
+
+  "deleteTask": "Supprimer la tâche",
+
+  "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette tâche ?",
+
+  "cancel": "Annuler",
+
+  "delete": "Supprimer",
+
+  "noTaskFound": "Aucune tâche trouvée",
+
+  "changeFilter": "Essayez de changer les filtres ou créez une nouvelle tâche",
+
+  "createTask": "Créer une nouvelle tâche",
+
+  "high": "Haute",
+
+  "medium": "Moyenne",
+
+  "low": "Bas",
+
+  "search": "Rechercher...",
+
+  "edit": "modifier",
+
+  "editTask": "Modifier la tâche",
+
+  "taskTitle": "Titre de la tâche",
+
+  "needToBeDone": "Que faut-il faire",
+
+  "titleRequired": "Le titre est requis",
+
+  "descriptionOptional": "Description (optionnelle)",
+
+  "detailTask": "Ajouter des détails sur la tâche",
+
+  "dueDate": "Date d'échéance (optionnelle)",
+
+  "selectDate": "Sélectionner une date",
+
+  "priority": "Priorité",
+
+  "category": "Catégorie"
+
+}

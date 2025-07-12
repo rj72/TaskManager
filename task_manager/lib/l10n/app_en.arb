@@ -1,0 +1,182 @@
+{
+  "language": "English",
+  "@language": {
+    "description": "The language of the application",
+    "type": "string"
+  },
+  "appTitle": "Task Manager",
+  "@appTitle": {
+    "description": "The title of the application",
+    "type": "string"
+  },
+  "description": "Organize your tasks with ease and elegance",
+  "@description": {
+    "description": "A brief description of the application",
+    "type": "string"
+  },
+  "progress": "Progress",
+  "@progress": {
+    "description": "Label for the progress of tasks",
+    "type": "string"
+  },
+  "completed": "Completed",
+  "@completed": {
+    "description": "Label for completed tasks",
+    "type": "string"
+  },
+  "all": "All",
+  "@all": {
+    "description": "Label for all tasks",
+    "type": "string"
+  },
+  "active": "Active",
+  "@active": {
+    "description": "Label for active tasks",
+    "type": "string"
+  },
+  "allCategories": "All Categories",
+  "@allCategories": {
+    "description": "Label for all categories of tasks",
+    "type": "string"
+  },
+  "personal": "Personal",
+  "@personal": {
+    "description": "Label for personal tasks",
+    "type": "string"
+  },
+  "work": "Work",
+  "@work": {
+    "description": "Label for work-related tasks",
+    "type": "string"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Label for home-related tasks",
+    "type": "string"
+  },
+  "health": "Health",
+  "@health": {
+    "description": "Label for health-related tasks",
+    "type": "string"
+  },
+  "other": "Other",
+  "@other": {
+    "description": "Label for other tasks",
+    "type": "string"
+  },
+  "clearCompleted": "Clear Completed",
+  "@clearCompleted": {
+    "description": "Button to clear completed tasks",
+    "type": "string"
+  },
+  "deleteTask": "Delete Task",
+  "@deleteTask": {
+    "description": "Button to delete a task",
+    "type": "string"
+  },
+  "confirmDelete": "Are you sure to delete this task?",
+  "@confirmDelete": {
+    "description": "Confirmation message for task deletion",
+    "type": "string"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Button to cancel an action",
+    "type": "string"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Button to confirm deletion",
+    "type": "string"
+  },
+  "noTaskFound": "No tasks found",
+  "@noTaskFound": {
+    "description": "Message displayed when no tasks are found",
+    "type": "string"
+  },
+  "changeFilter": "Try changing filters or create a new task",
+  "@changeFilter": {
+    "description": "Suggestion to change filters or create a new task",
+    "type": "string"
+  },
+  "createTask": "Create New Task",
+  "@createTask": {
+    "description": "Button to create a new task",
+    "type": "string"
+  },
+  "high": "High",
+  "@high": {
+    "description": "Label for high priority tasks",
+    "type": "string"
+  },
+  "medium": "Medium",
+  "@medium": {
+    "description": "Label for medium priority tasks",
+    "type": "string"
+  },
+  "low": "Low",
+  "@low": {
+    "description": "Label for low priority tasks",
+    "type": "string"
+  },
+  "search": "Search...",
+  "@search": {
+    "description": "Placeholder text for search input",
+    "type": "string"
+  },
+  "edit": "edit",
+  "@edit": {
+    "description": "Label for editing a task",
+    "type": "string"
+  },
+  "editTask": "Edit Task",
+  "@editTask": {
+    "description": "Button to edit a task",
+    "type": "string"
+  },
+  "taskTitle": "Task Title",
+  "@taskTitle": {
+    "description": "Label for the title of a task",
+    "type": "string"
+  },
+  "needToBeDone": "What needs to be done",
+  "@needToBeDone": {
+    "description": "Placeholder text for task description",
+    "type": "string"
+  },
+  "titleRequired": "Title is required",
+  "@titleRequired": {
+    "description": "Error message when task title is required",
+    "type": "string"
+  },
+  "descriptionOptional": "Description (optional)",
+  "@descriptionOptional": {
+    "description": "Placeholder text for optional task description",
+    "type": "string"
+  },
+  "detailTask": "Add details about the task",
+  "@detailTask": {
+    "description": "Label for adding details to a task",
+    "type": "string"
+  },
+  "dueDate": "Due date (optional)",
+  "@dueDate": {
+    "description": "Placeholder text for optional due date",
+    "type": "string"
+  },
+  "selectDate": "Select date",
+  "@selectDate": {
+    "description": "Label for selecting a date",
+    "type": "string"
+  },
+  "priority": "Priority",
+  "@priority": {
+    "description": "Label for task priority",
+    "type": "string"
+  },
+  "category": "Category",
+  "@category": {
+    "description": "Label for task category",
+    "type": "string"
+  }
+}

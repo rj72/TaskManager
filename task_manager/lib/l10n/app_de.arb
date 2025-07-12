@@ -1,0 +1,73 @@
+{
+  "language": "Deutsch",
+
+  "appTitle": "Aufgabenmanager",
+
+  "description": "Organisieren Sie Ihre Aufgaben mit Leichtigkeit und Eleganz",
+
+  "progress": "Fortschritt",
+
+  "completed": "Abgeschlossen",
+
+  "all": "Alle",
+
+  "active": "Aktiv",
+
+  "allCategories": "Alle Kategorien",
+
+  "personal": "Persönlich",
+
+  "work": "Arbeit",
+
+  "home": "Zuhause",
+
+  "health": "Gesundheit",
+
+  "other": "Andere",
+
+  "clearCompleted": "Abgeschlossene löschen",
+
+  "deleteTask": "Aufgabe löschen",
+
+  "confirmDelete": "Möchten Sie diese Aufgabe wirklich löschen?",
+
+  "cancel": "Abbrechen",
+
+  "delete": "Löschen",
+
+  "noTaskFound": "Keine Aufgaben gefunden",
+
+  "changeFilter": "Versuchen Sie, die Filter zu ändern oder eine neue Aufgabe zu erstellen",
+
+  "createTask": "Neue Aufgabe erstellen",
+
+  "high": "Hoch",
+
+  "medium": "Mittel",
+
+  "low": "Niedrig",
+
+  "search": "Suchen...",
+
+  "edit": "bearbeiten",
+
+  "editTask": "Aufgabe bearbeiten",
+
+  "taskTitle": "Aufgabentitel",
+
+  "needToBeDone": "Was muss getan werden",
+
+  "titleRequired": "Titel ist erforderlich",
+
+  "descriptionOptional": "Beschreibung (optional)",
+
+  "detailTask": "Details zur Aufgabe hinzufügen",
+
+  "dueDate": "Fälligkeitsdatum (optional)",
+
+  "selectDate": "Datum auswählen",
+
+  "priority": "prioriteit",
+
+  "category": "Categorie"
+}

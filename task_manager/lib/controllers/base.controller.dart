@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:task_manager/data/database_helper.dart';
 
@@ -13,19 +15,24 @@ class BaseController extends GetxController {
   final DatabaseHelper _dbHelper = DatabaseHelper();
   var searchValue = ''.obs;
 
-  final List<String> categories = [
-    'All categories',
-    'Personal',
-    'Work',
-    'Home',
-    'Health',
-    'Other',
-  ];
+  final List<String> categories = [];
 
   @override
   onInit() {
     super.onInit();
     loadTasks();
+  }
+
+  List<String> getTranslatedCategories(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return [
+      l10n.allCategories,
+      l10n.personal,
+      l10n.work,
+      l10n.home,
+      l10n.health,
+      l10n.other,
+    ];
   }
 
   Future<void> loadTasks() async {
@@ -49,15 +56,34 @@ class BaseController extends GetxController {
   }
 
   RxList<Task> get combinedFilteredTasks {
+    final l10n = AppLocalizations.of(Get.context!);
+
+    String getCategoryLabel(String key) {
+      switch (key) {
+        case 'Personal':
+          return l10n!.personal;
+        case 'Work':
+          return l10n!.work;
+        case 'Home':
+          return l10n!.home;
+        case 'Health':
+          return l10n!.health;
+        case 'Other':
+          return l10n!.other;
+        default:
+          return l10n!.allCategories;
+      }
+    }
+
     var filteredTasks = tasks;
 
     // Filter by status
     switch (selectedStatus.value) {
-      case 'Active':
+      case var v when v == l10n?.active:
         filteredTasks =
             filteredTasks.where((task) => !task.isCompleted.value).toList().obs;
         break;
-      case 'Completed':
+      case var v when v == l10n?.completed:
         filteredTasks =
             filteredTasks.where((task) => task.isCompleted.value).toList().obs;
         break;
@@ -66,32 +92,32 @@ class BaseController extends GetxController {
     }
 
     // Filter by category
-    switch (selectedCategory.value) {
-      case 'All Categories':
+    switch (getCategoryLabel(selectedCategory.value)) {
+      case var v when v == l10n?.allCategories:
         return filteredTasks;
-      case 'Personal':
+      case var v when v == l10n?.personal:
         return filteredTasks
-            .where((task) => task.category == 'Personal')
+            .where((task) => task.category == l10n?.personal)
             .toList()
             .obs;
-      case 'Work':
+      case var v when v == l10n?.work:
         return filteredTasks
-            .where((task) => task.category == 'Work')
+            .where((task) => task.category == l10n?.work)
             .toList()
             .obs;
-      case 'Home':
+      case var v when v == l10n?.home:
         return filteredTasks
-            .where((task) => task.category == 'Home')
+            .where((task) => task.category == l10n?.home)
             .toList()
             .obs;
-      case 'Health':
+      case var v when v == l10n?.health:
         return filteredTasks
-            .where((task) => task.category == 'Health')
+            .where((task) => task.category == l10n?.health)
             .toList()
             .obs;
-      case 'Other':
+      case var v when v == l10n?.other:
         return filteredTasks
-            .where((task) => task.category == 'Other')
+            .where((task) => task.category == l10n?.other)
             .toList()
             .obs;
       default:

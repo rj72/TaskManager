@@ -1,0 +1,78 @@
+{
+  "language": "Español",
+
+  "appTitle": "Gestor de Tareas",
+
+  "description": "Organiza tus tareas con facilidad y elegancia",
+
+  "progress": "Progreso",
+
+  "completed": "Completadas",
+
+  "all": "Todas",
+
+  "active": "Activas",
+
+  "allCategories": "Todas las categorías",
+
+  "personal": "Personal",
+
+  "work": "Trabajo",
+
+  "home": "Hogar",
+
+  "health": "Salud",
+
+  "other": "Otro",
+
+  "clearCompleted": "Borrar completadas",
+
+  "deleteTask": "Eliminar tarea",
+
+  "confirmDelete": "¿Estás seguro de eliminar esta tarea?",
+
+  "cancel": "Cancelar",
+
+  "delete": "Eliminar",
+
+  "noTaskFound": "No se encontraron tareas",
+
+  "changeFilter": "Intenta cambiar los filtros o crea una nueva tarea",
+
+  "createTask": "Crear nueva tarea",
+
+  "high": "Alta",
+
+  "medium": "Media",
+
+  "low": "Baja",
+
+  "search": "Buscar...",
+
+  "edit": "editar",
+
+  "editTask": "Editar tarea",
+
+
+  "taskTitle": "Título de la tarea",
+
+
+  "needToBeDone": "Qué hay que hacer",
+
+  "titleRequired": "El título es obligatorio",
+
+  "descriptionOptional": "Descripción (opcional)",
+
+
+  "detailTask": "Agregar detalles sobre la tarea",
+
+
+  "dueDate": "Fecha de vencimiento (opcional)",
+
+
+  "selectDate": "Seleccionar fecha",
+
+  "priority": "prioridad",
+
+  "category": "categoría"
+}

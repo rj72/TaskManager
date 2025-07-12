@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 import '../controllers/base.controller.dart';
@@ -12,15 +13,18 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final formKey = GlobalKey<FormState>();
     late String title = task?.title ?? '';
     String description = task?.description ?? '';
-    String priority = task?.priority ?? 'Medium';
-    String category = task?.category ?? 'Personal';
+    String priority = task?.priority ?? l10n.medium;
+    String category = task?.category ?? l10n.personal;
     var dueDate = Rxn<DateTime>(task?.dueDate);
 
+    final categories = controller.getTranslatedCategories(context);
+
     return AlertDialog(
-      title: Text(task == null ? 'Create New Task' : 'Edit Task'),
+      title: Text(task == null ? l10n.createTask : l10n.editTask),
       content: Form(
         key: formKey,
         child: SingleChildScrollView(
@@ -28,20 +32,20 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
             children: [
               TextFormField(
                 initialValue: title,
-                decoration: const InputDecoration(
-                  labelText: 'Task title',
-                  hintText: 'What needs to be done?',
+                decoration: InputDecoration(
+                  labelText: l10n.taskTitle,
+                  hintText: l10n.needToBeDone,
                 ),
                 validator: (value) =>
-                    value?.isEmpty ?? true ? 'Title is required' : null,
+                    value?.isEmpty ?? true ? l10n.titleRequired : null,
                 onSaved: (value) => title = value ?? '',
               ),
               const SizedBox(height: 6),
               TextFormField(
                 initialValue: description,
-                decoration: const InputDecoration(
-                  labelText: 'Description (optional)',
-                  hintText: 'Add details about the task',
+                decoration: InputDecoration(
+                  labelText: l10n.descriptionOptional,
+                  hintText: l10n.detailTask,
                 ),
                 onSaved: (value) => description = value ?? '',
               ),
@@ -53,14 +57,14 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
                     flex: 1,
                     child: DropdownButtonFormField<String>(
                       value: priority,
-                      items: ['Low', 'Medium', 'High']
+                      items: [l10n.low, l10n.medium, l10n.high]
                           .map((p) => DropdownMenuItem(
                                 value: p,
                                 child: Text(p),
                               ))
                           .toList(),
-                      onChanged: (value) => priority = value ?? 'Medium',
-                      decoration: const InputDecoration(labelText: 'Priority'),
+                      onChanged: (value) => priority = value ?? l10n.medium,
+                      decoration: InputDecoration(labelText: l10n.priority),
                     ),
                   ),
                   const SizedBox(width: 4),
@@ -68,14 +72,14 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
                     flex: 1,
                     child: DropdownButtonFormField<String>(
                       value: category,
-                      items: controller.categories
+                      items: categories
                           .map((c) => DropdownMenuItem(
                                 value: c,
                                 child: Text(c),
                               ))
                           .toList(),
-                      onChanged: (value) => category = value ?? 'Personal',
-                      decoration: const InputDecoration(labelText: 'Category'),
+                      onChanged: (value) => category = value ?? l10n.personal,
+                      decoration: InputDecoration(labelText: l10n.category),
                     ),
                   ),
                 ],
@@ -95,15 +99,15 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
                 },
                 child: Obx(
                   () => InputDecorator(
-                    decoration: const InputDecoration(
-                      labelText: 'Due date (optional)',
+                    decoration: InputDecoration(
+                      labelText: l10n.dueDate,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           dueDate.value == null
-                              ? 'Select a date'
+                              ? l10n.selectDate
                               : '${dueDate.value!.day}/${dueDate.value!.month}/${dueDate.value!.year}',
                         ),
                         const Icon(Icons.calendar_today, size: 20),
@@ -119,7 +123,10 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel',style: TextStyle(color: Colors.blue,)),
+          child: Text(l10n.cancel,
+              style: const TextStyle(
+                color: Colors.blue,
+              )),
         ),
         ElevatedButton(
           style: ButtonStyle(
@@ -143,8 +150,8 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
             }
           },
           child: Text(
-            task == null ? 'Create Task' : 'Edit Task',
-            style: TextStyle(color: Colors.white),
+            task == null ? l10n.createTask : l10n.editTask,
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       ],
