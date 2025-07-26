@@ -21,9 +21,12 @@ class MainView extends BaseStatelessView<BaseController> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: Text(
-            l10n.appTitle,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+          title: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              l10n.appTitle,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+            ),
           ),
           actions: [
             Padding(
@@ -58,7 +61,17 @@ class MainView extends BaseStatelessView<BaseController> {
                     style: const TextStyle(fontSize: 16, color: Colors.grey)),
                 _buildProgressSection(),
                 const SizedBox(height: 16),
-                _buildSearchTask(),
+                Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    Flexible(flex: 2, child: _buildSearchTask()),
+                    Flexible(
+                        flex: 1,
+                        child: controller.completedCount.value == 0
+                            ? const SizedBox.shrink()
+                            : _buildClearCompletedButton())
+                  ],
+                ),
                 const SizedBox(height: 8),
                 _buildStatusFilter(),
                 const SizedBox(height: 8),
@@ -183,12 +196,43 @@ class MainView extends BaseStatelessView<BaseController> {
 
   Widget _buildClearCompletedButton() {
     return TextButton(
-      onPressed: controller.clearCompletedTasks,
-      child: Text(AppLocalizations.of(Get.context!)!.clearCompleted),
+      onPressed: () async {
+        Get.defaultDialog(
+          title: AppLocalizations.of(Get.context!)!.deleteTask,
+          middleText: AppLocalizations.of(Get.context!)!.deleteCompletedTasks,
+          confirm: ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(
+                  Theme.of(Get.context!).primaryColor),
+            ),
+            onPressed: () {
+              controller.clearCompletedTasks;
+              Get.back();
+            },
+            child: const Text(
+              'OK',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          cancel: TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: Text(AppLocalizations.of(Get.context!)!.cancel,
+                style: const TextStyle(
+                  color: Colors.blue,
+                )),
+          ),
+        );
+      },
+      child: Text(
+        AppLocalizations.of(Get.context!)!.clearCompleted,
+        style: const TextStyle(color: Colors.red),
+      ),
     );
   }
 
-  Widget _buildTaskList() {
+  /*Widget _buildTaskList() {
     final tasks = controller.combinedFilteredTasks;
 
     if (tasks.isEmpty) {
@@ -273,8 +317,13 @@ class MainView extends BaseStatelessView<BaseController> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               decoration: BoxDecoration(
+                color: task.isCompleted.value
+                    ? Colors.grey[100]
+                    : Colors.blue[100],
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.grey, width: 0.5),
+                border: Border.all(
+                    color: task.isCompleted.value ? Colors.grey : Colors.blue,
+                    width: 0.5),
               ),
               child: InkWell(
                 onTap: () {
@@ -295,8 +344,9 @@ class MainView extends BaseStatelessView<BaseController> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
+                          Flex(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            direction: Axis.horizontal,
                             children: [
                               Column(
                                 children: [
@@ -317,17 +367,22 @@ class MainView extends BaseStatelessView<BaseController> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(width: 12),
+                              const SizedBox(width: 10),
                               _buildPriorityChip(
                                   task.priority, task.isCompleted.value),
-                              const SizedBox(width: 12),
-                              _buildCategoryChip(task.category),
-                              const SizedBox(width: 12),
+                              const SizedBox(width: 10),
+                              _buildCategoryChip(
+                                  task.category, task.isCompleted.value),
+                              const SizedBox(width: 4),
                               task.dueDate != null
                                   ? Text(
                                       task.dueDate!.toFormattedString(),
-                                      style: const TextStyle(
-                                          fontSize: 12, color: Colors.grey),
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey,
+                                          decoration: task.isCompleted.value
+                                              ? TextDecoration.lineThrough
+                                              : null),
                                       overflow: TextOverflow.ellipsis,
                                     )
                                   : const SizedBox.shrink(),
@@ -336,8 +391,12 @@ class MainView extends BaseStatelessView<BaseController> {
                           if (task.description.isNotEmpty)
                             Text(
                               task.description,
-                              style: const TextStyle(
-                                  fontSize: 12, color: Colors.grey),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                  decoration: task.isCompleted.value
+                                      ? TextDecoration.lineThrough
+                                      : null),
                             ),
                         ],
                       ),
@@ -345,6 +404,162 @@ class MainView extends BaseStatelessView<BaseController> {
                   ),
                 ),
               ),
+            ),
+          ),
+        );
+      },
+    );
+  }*/
+
+  Widget _buildTaskList() {
+    final tasks = controller.combinedFilteredTasks;
+
+    if (tasks.isEmpty) {
+      return _buildEmptyState();
+    }
+    return ListView.separated(
+      itemCount: tasks.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      separatorBuilder: (_, __) => const SizedBox(height: 8),
+      itemBuilder: (context, index) {
+        final task = tasks[index];
+        return Slidable(
+          key: ValueKey(task.id),
+          endActionPane: ActionPane(
+            motion: const ScrollMotion(),
+            children: [
+              SlidableAction(
+                onPressed: (_) async {
+                  final updatedTask = await showDialog<Task>(
+                    context: Get.context!,
+                    builder: (context) => AddTaskDialog(
+                      controller: controller,
+                      task: task,
+                    ),
+                  );
+                  if (updatedTask != null) {
+                    controller.updateTask(updatedTask);
+                  }
+                },
+                icon: Icons.edit,
+                foregroundColor: Colors.blue,
+                backgroundColor: Colors.blue.withOpacity(0.1),
+                label: AppLocalizations.of(Get.context!)!.edit,
+              ),
+              SlidableAction(
+                onPressed: (_) async {
+                  Get.defaultDialog(
+                    title: AppLocalizations.of(Get.context!)!.deleteTask,
+                    middleText:
+                        AppLocalizations.of(Get.context!)!.confirmDelete,
+                    confirm: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            Theme.of(context).primaryColor),
+                      ),
+                      onPressed: () {
+                        controller.deleteTask(task.id!);
+                        Get.back();
+                      },
+                      child: const Text(
+                        'OK',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    cancel: TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: Text(AppLocalizations.of(Get.context!)!.cancel,
+                          style: const TextStyle(
+                            color: Colors.blue,
+                          )),
+                    ),
+                  );
+                },
+                icon: Icons.delete,
+                foregroundColor: Colors.red,
+                backgroundColor: Colors.red.withOpacity(0.1),
+                label: AppLocalizations.of(Get.context!)!.delete,
+              ),
+            ],
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color:
+                  task.isCompleted.value ? Colors.grey[100] : Colors.blue[100],
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                  color: task.isCompleted.value ? Colors.grey : Colors.blue,
+                  width: 0.5),
+            ),
+            child: ExpansionTile(
+              shape: const Border(),
+              clipBehavior: Clip.none,
+              leading: GestureDetector(
+                onTap: () {
+                  task.isCompleted.toggle();
+                  controller.updateTaskCounts();
+                  controller.updateTask(task);
+                },
+                child: task.isCompleted.value
+                    ? const Icon(Icons.check_circle, color: Colors.blue)
+                    : const Icon(Icons.circle_outlined),
+              ),
+              title: Text(
+                task.title,
+                style: task.isCompleted.value
+                    ? const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        decoration: TextDecoration.lineThrough,
+                        decorationThickness: 2,
+                      )
+                    : const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+              ),
+              children: [
+                if (task.description.isNotEmpty)
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      task.description,
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[700],
+                          decoration: task.isCompleted.value
+                              ? TextDecoration.lineThrough
+                              : null),
+                    ),
+                  ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      _buildPriorityChip(task.priority, task.isCompleted.value),
+                      const SizedBox(width: 8),
+                      _buildCategoryChip(task.category, task.isCompleted.value),
+                      const SizedBox(width: 8),
+                      if (task.dueDate != null)
+                        Text(
+                          task.dueDate!.toFormattedString(),
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                              decoration: task.isCompleted.value
+                                  ? TextDecoration.lineThrough
+                                  : null),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         );
@@ -386,7 +601,6 @@ class MainView extends BaseStatelessView<BaseController> {
   }
 
   Widget _buildPriorityChip(String priority, bool isCompleted) {
-    Color color;
     final l10n = AppLocalizations.of(Get.context!);
 
     String getPriorityLabel(String key) {
@@ -408,7 +622,7 @@ class MainView extends BaseStatelessView<BaseController> {
           return Colors.red;
         case 'Medium':
           return Colors.orange;
-        default :
+        default:
           return Colors.green;
       }
     }
@@ -416,13 +630,17 @@ class MainView extends BaseStatelessView<BaseController> {
     return Chip(
       label: Text(getPriorityLabel(priority)),
       padding: EdgeInsets.zero,
-      backgroundColor: getPriorityColor(priority).withOpacity(0.2),
+      backgroundColor: isCompleted
+          ? Colors.grey[90]
+          : getPriorityColor(priority).withOpacity(0.2),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      labelStyle: TextStyle(color: getPriorityColor(priority)),
+      labelStyle: TextStyle(
+          color: isCompleted ? Colors.grey : getPriorityColor(priority),
+          decoration: isCompleted ? TextDecoration.lineThrough : null),
     );
   }
 
-  Widget _buildCategoryChip(String category) {
+  Widget _buildCategoryChip(String category, bool isCompleted) {
     final l10n = AppLocalizations.of(Get.context!);
 
     // Traduction de la clé en texte localisé
@@ -462,9 +680,13 @@ class MainView extends BaseStatelessView<BaseController> {
     return Chip(
       label: Text(getCategoryLabel(category)),
       padding: EdgeInsets.zero,
-      backgroundColor: getCategoryColor(category).withOpacity(0.2),
+      backgroundColor: isCompleted
+          ? Colors.grey[90]
+          : getCategoryColor(category).withOpacity(0.2),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      labelStyle: TextStyle(color: getCategoryColor(category)),
+      labelStyle: TextStyle(
+          color: isCompleted ? Colors.grey : getCategoryColor(category),
+          decoration: isCompleted ? TextDecoration.lineThrough : null),
     );
   }
 

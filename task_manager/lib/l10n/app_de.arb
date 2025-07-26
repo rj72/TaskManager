@@ -69,5 +69,7 @@
 
   "priority": "prioriteit",
 
-  "category": "Categorie"
+  "category": "Categorie",
+
+  "deleteCompletedTasks": "Weet u zeker dat u alle voltooide taken verwijdert?"
 }

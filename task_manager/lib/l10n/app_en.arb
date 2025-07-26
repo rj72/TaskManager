@@ -178,5 +178,11 @@
   "@category": {
     "description": "Label for task category",
     "type": "string"
-  }
+  },
+
+  "deleteCompletedTasks": "Are you sure to delete all completed tasks?",
+    "@deleteCompletedTasks": {
+        "description": "Confirmation message for deleting all completed tasks",
+        "type": "string"
+    }
 }

@@ -69,6 +69,8 @@
 
   "priority": "Priorité",
 
-  "category": "Catégorie"
+  "category": "Catégorie",
+
+  "deleteCompletedTasks": "Êtes-vous sûr de supprimer toutes les tâches terminées?"
 
 }

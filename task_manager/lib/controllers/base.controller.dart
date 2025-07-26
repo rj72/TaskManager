@@ -26,7 +26,6 @@ class BaseController extends GetxController {
   List<String> getTranslatedCategories(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return [
-      l10n.allCategories,
       l10n.personal,
       l10n.work,
       l10n.home,

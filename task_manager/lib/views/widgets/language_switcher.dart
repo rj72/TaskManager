@@ -30,7 +30,10 @@ class LanguageSwitcher extends StatelessWidget {
         }
       },
       underline: Container(),
-      //icon: const Icon(Icons.language),
+      icon: const Icon(
+        Icons.arrow_drop_down,
+        color: Colors.blue,
+      ),
     );
   }
 }

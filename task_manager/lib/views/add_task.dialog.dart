@@ -23,6 +23,50 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
 
     final categories = controller.getTranslatedCategories(context);
 
+    String getPriorityLabel(String key) {
+      switch (key) {
+        case 'High':
+          return l10n.high;
+        case 'Medium':
+          return l10n.medium;
+        case 'Low':
+          return l10n.low;
+        default:
+          return l10n.low; // Default to low if not recognized
+      }
+    }
+
+    String setPriorityLabel(String label) {
+      if (label == l10n.high) return 'High';
+      if (label == l10n.medium) return 'Medium';
+      if (label == l10n.low) return 'Low';
+      return 'Low';
+    } // Par défaut si non reconnu
+
+    String getCategoryLabel(String key) {
+      switch (key) {
+        case 'Personal':
+          return l10n.personal;
+        case 'Work':
+          return l10n.work;
+        case 'Home':
+          return l10n.home;
+        case 'Health':
+          return l10n.health;
+        default:
+          return l10n.other;
+      }
+    }
+
+    String setCategoryLabel(String key) {
+      if (key == l10n.personal) return 'personal';
+      if (key == l10n.work) return 'work';
+      if (key == l10n.home) return 'home';
+      if (key == l10n.health) return 'health';
+      if (key == l10n.other) return 'other';
+      return 'other';
+    }
+
     return AlertDialog(
       title: Text(task == null ? l10n.createTask : l10n.editTask),
       content: Form(
@@ -53,32 +97,32 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
               Flex(
                 direction: Axis.horizontal,
                 children: [
-                  Expanded(
+                  Flexible(
                     flex: 1,
                     child: DropdownButtonFormField<String>(
-                      value: priority,
+                      value: getPriorityLabel(priority),
                       items: [l10n.low, l10n.medium, l10n.high]
                           .map((p) => DropdownMenuItem(
                                 value: p,
                                 child: Text(p),
                               ))
                           .toList(),
-                      onChanged: (value) => priority = value ?? l10n.medium,
+                      onChanged: (value) => priority = value!,
                       decoration: InputDecoration(labelText: l10n.priority),
                     ),
                   ),
                   const SizedBox(width: 4),
-                  Expanded(
+                  Flexible(
                     flex: 1,
                     child: DropdownButtonFormField<String>(
-                      value: category,
+                      value: getCategoryLabel(category),
                       items: categories
                           .map((c) => DropdownMenuItem(
                                 value: c,
                                 child: Text(c),
                               ))
                           .toList(),
-                      onChanged: (value) => category = value ?? l10n.personal,
+                      onChanged: (value) => category = value!,
                       decoration: InputDecoration(labelText: l10n.category),
                     ),
                   ),
@@ -142,8 +186,8 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
                     id: task?.id,
                     title: title,
                     description: description,
-                    category: category,
-                    priority: priority,
+                    category: setCategoryLabel(category),
+                    priority: setPriorityLabel(priority),
                     dueDate: dueDate.value,
                     isCompleted: task?.isCompleted ?? false.obs),
               );
