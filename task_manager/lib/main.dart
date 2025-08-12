@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:task_manager/views/main_view.dart';
+import 'package:task_manager/views/main_scaffold.dart';
 
 import 'l10n/l10n.dart';
 
@@ -32,7 +32,7 @@ class TaskManagerApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Sebino',
       ),
-      home: MainView(),
+      home: MainScaffold(),
       debugShowCheckedModeBanner: false,
     );
   }

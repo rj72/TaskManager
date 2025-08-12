@@ -179,10 +179,20 @@
     "description": "Label for task category",
     "type": "string"
   },
-
   "deleteCompletedTasks": "Are you sure to delete all completed tasks?",
-    "@deleteCompletedTasks": {
-        "description": "Confirmation message for deleting all completed tasks",
-        "type": "string"
-    }
+  "@deleteCompletedTasks": {
+    "description": "Confirmation message for deleting all completed tasks",
+    "type": "string"
+  },
+  "task": "Task",
+  "@task": {
+    "description": "Label for a single task",
+    "type": "string"
+  },
+
+  "page": "Page",
+  "@page": {
+    "description": "Label for a page in the application",
+    "type": "string"
+  }
 }

@@ -71,5 +71,8 @@
 
   "category": "Categorie",
 
-  "deleteCompletedTasks": "Weet u zeker dat u alle voltooide taken verwijdert?"
+  "deleteCompletedTasks": "Weet u zeker dat u alle voltooide taken verwijdert?",
+  "task" : "Taak",
+
+  "page" : "Pagina"
 }

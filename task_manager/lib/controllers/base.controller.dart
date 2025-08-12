@@ -14,6 +14,8 @@ class BaseController extends GetxController {
   var isExpanded = false.obs;
   final DatabaseHelper _dbHelper = DatabaseHelper();
   var searchValue = ''.obs;
+  final RxInt selectedIndex = 0.obs;
+  final RxBool isSelected = true.obs;
 
   final List<String> categories = [];
 

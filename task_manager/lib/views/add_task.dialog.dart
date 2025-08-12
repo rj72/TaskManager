@@ -59,12 +59,12 @@ class AddTaskDialog extends BaseStatelessView<BaseController> {
     }
 
     String setCategoryLabel(String key) {
-      if (key == l10n.personal) return 'personal';
-      if (key == l10n.work) return 'work';
-      if (key == l10n.home) return 'home';
-      if (key == l10n.health) return 'health';
-      if (key == l10n.other) return 'other';
-      return 'other';
+      if (key == l10n.personal) return 'Personal';
+      if (key == l10n.work) return 'Work';
+      if (key == l10n.home) return 'Home';
+      if (key == l10n.health) return 'Health';
+      if (key == l10n.other) return 'Other';
+      return 'Other';
     }
 
     return AlertDialog(

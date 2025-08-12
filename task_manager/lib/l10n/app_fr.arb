@@ -71,6 +71,10 @@
 
   "category": "Catégorie",
 
-  "deleteCompletedTasks": "Êtes-vous sûr de supprimer toutes les tâches terminées?"
+  "deleteCompletedTasks": "Êtes-vous sûr de supprimer toutes les tâches terminées?",
+
+  "task" : "Tâche",
+
+  "page" : "Page"
 
 }

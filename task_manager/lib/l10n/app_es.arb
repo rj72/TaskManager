@@ -75,5 +75,9 @@
   "priority": "prioridad",
 
   "category": "categoría",
-  "deleteCompletedTasks": "¿Seguro que eliminará todas las tareas completadas?"
+  "deleteCompletedTasks": "¿Seguro que eliminará todas las tareas completadas?",
+
+  "task" : "Tarea",
+
+  "page" : "página"
 }

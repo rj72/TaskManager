@@ -10,10 +10,10 @@ import '../utils.dart';
 import 'add_task.dialog.dart';
 import 'base_stateless.view.dart';
 
-class MainView extends BaseStatelessView<BaseController> {
+class TaskView extends BaseStatelessView<BaseController> {
   final TextEditingController searchController = TextEditingController();
 
-  MainView({Key? key}) : super(key: key, controller: Get.put(BaseController()));
+  TaskView({Key? key}) : super(key: key, controller: Get.put(BaseController()));
 
   @override
   Widget build(BuildContext context) {
