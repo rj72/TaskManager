@@ -100,13 +100,14 @@ class TaskView extends BaseStatelessView<BaseController> {
         ),
         const SizedBox(height: 8),
         ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: LinearProgressIndicator(
-              value: total == 0 ? 0 : completed / total,
-              backgroundColor: Colors.grey[200],
-              minHeight: 8,
-              valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
-            )),
+          borderRadius: BorderRadius.circular(8),
+          child: LinearProgressIndicator(
+            value: total == 0 ? 0 : completed / total,
+            backgroundColor: Colors.grey[200],
+            minHeight: 8,
+            valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+          ),
+        ),
         const SizedBox(height: 8),
         Text(
           '$completed/$total ${AppLocalizations.of(Get.context!)!.completed}',
@@ -524,8 +525,7 @@ class TaskView extends BaseStatelessView<BaseController> {
               children: [
                 if (task.description.isNotEmpty)
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       task.description,
                       style: TextStyle(
@@ -537,8 +537,7 @@ class TaskView extends BaseStatelessView<BaseController> {
                     ),
                   ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
